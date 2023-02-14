@@ -21,10 +21,7 @@ import Versions from './components/Versions.vue'
     </div>
     <div class="link-item link-dot">•</div>
     <div class="link-item">
-      <a
-        target="_blank"
-        href="https://github.com/alex8088/quick-start/tree/master/packages/create-electron"
-      >
+      <a target="_blank" href="https://github.com/alex8088/quick-start/tree/master/packages/create-electron">
         create-electron
       </a>
     </div>

@@ -1,6 +1,6 @@
 # vue_building_planner
 
-An Electron application with Vue and TypeScript
+build buildings nicely
 
 ## Tech Stack
 

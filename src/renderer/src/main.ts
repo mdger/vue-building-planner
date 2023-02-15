@@ -1,6 +1,11 @@
 import { createApp } from 'vue'
-import App from './App.vue'
 import Editor from './Editor.vue'
+import ElementPlus from 'element-plus'
+// import 'element-plus/dist/index.css'
 
-// createApp(App).mount('#app')
-createApp(Editor).mount('#app')
+// import App from './App.vue'
+
+const app = createApp(Editor)
+app.use(ElementPlus)
+
+app.mount('#app')

@@ -1,39 +1,70 @@
 <script setup lang="ts">
 import * as THREE from 'three'
 import { onMounted, ref } from 'vue'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import 'element-plus/dist/index.css'
 
-const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+let camera, scene, renderer
 
-const renderer = new THREE.WebGLRenderer()
-renderer.setSize(window.innerWidth, window.innerHeight)
+function init(): void {
+  scene = new THREE.Scene()
+  scene.background = new THREE.Color(0x999999)
 
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-const cube = new THREE.Mesh(geometry, material)
-scene.add(cube)
+  const light = new THREE.DirectionalLight(0xffffff)
+  light.position.set(0.5, 1.0, 0.5).normalize()
 
-const size = 10
-const divisions = 10
+  scene.add(light)
 
-const gridHelper = new THREE.GridHelper(size, divisions)
-scene.add(gridHelper)
+  camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 500)
 
-camera.position.z = 5
+  camera.position.y = 5
+  camera.position.z = 10
 
-function animate(): void {
-  requestAnimationFrame(animate)
+  scene.add(camera)
 
-  cube.rotation.x += 0.01
-  cube.rotation.y += 0.01
+  const grid = new THREE.GridHelper(50, 50, 0xffffff, 0x333333)
+  scene.add(grid)
+  // const grid2 = new THREE.GridHelper(50, 50, 0xffffff, 0x333333)
+  // grid2.position.y = 10
+  // scene.add(grid2)
 
+  renderer = new THREE.WebGLRenderer({ antialias: true })
+  renderer.outputEncoding = THREE.sRGBEncoding
+  renderer.setPixelRatio(window.devicePixelRatio)
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  document.body.appendChild(renderer.domElement)
+
+
+  const geometry = new THREE.BoxGeometry(1, 1, 1)
+  const material = new THREE.MeshPhongMaterial({ color: 0x44aa88 })
+  const cube = new THREE.Mesh(geometry, material)
+  scene.add(cube)
+
+  const controls = new OrbitControls(camera, renderer.domElement)
+  controls.addEventListener('change', render)
+  controls.update()
+
+  window.addEventListener('resize', onWindowResize)
+}
+
+function onWindowResize(): void {
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+
+  renderer.setSize(window.innerWidth, window.innerHeight)
+
+  render()
+}
+
+function render(): void {
   renderer.render(scene, camera)
 }
 
 const canvas = ref<HTMLDivElement | null>(null)
 
 onMounted(() => {
-  animate()
+  init()
+  render()
   canvas.value?.appendChild(renderer.domElement)
 })
 </script>

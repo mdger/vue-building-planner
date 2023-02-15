@@ -1,6 +1,14 @@
 # vue_building_planner
 
-An Electron application with Vue and TypesSript
+An Electron application with Vue and TypeScript
+
+## Tech Stack
+
+- [Three.js](https://threejs.org/)
+- [Vue 3](https://vuejs.org/)
+- [Electron](https://www.electronjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Element Plus](https://element-plus.org/)
 
 ## Recommended IDE Setup
 
